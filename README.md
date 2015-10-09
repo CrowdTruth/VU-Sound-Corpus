@@ -83,5 +83,12 @@ Our code was written in a combination of Python 2 (files 0-4) and Python 3 (file
 
 **Requirements**
 
+* Files 0,1 require `unicodecsv` to be installed.
 * File 1 requires a distributional model in Word2Vec format. We used the GoogleNews model from [here](https://code.google.com/p/word2vec/), that was trained on 100bn words.
 * Files 2-4 require the [CrowdTruth](https://github.com/CrowdTruth/CrowdTruth) framework to be installed.
+* Files 2-3 require the `requests` library to interface with the CrowdTruth framework.
+* Files 3-8 require the `lxml` library to parse/generate XML.
+* File 6 requires the `tabulate` library.
+* File 8 requires `matplotlib-venn` to be installed.
+
+
