@@ -1,0 +1,38 @@
+<!ELEMENT soundcollection (sound+)>
+<!ELEMENT sound (file+,uri,description,ratings,author-tags,crowd-tags)>
+<!ATTLIST sound
+	id ID #REQUIRED
+	batch CDATA #REQUIRED
+	name CDATA #REQUIRED
+	type CDATA #REQUIRED
+	samplerate CDATA #REQUIRED
+	duration CDATA #REQUIRED
+	channels CDATA #REQUIRED
+	bitrate CDATA #REQUIRED
+	bitdepth CDATA #REQUIRED >
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT file (#PCDATA)>
+<!ATTLIST file
+	type CDATA #REQUIRED >
+<!ELEMENT uri (#PCDATA)>
+<!ATTLIST uri
+	author CDATA #REQUIRED
+	license CDATA #REQUIRED >
+<!ELEMENT ratings (clarity,webrating)>
+<!ELEMENT clarity (#PCDATA)>
+<!ATTLIST clarity
+	count CDATA #REQUIRED >
+<!ELEMENT webrating (#PCDATA)>
+<!ATTLIST webrating
+	count CDATA #REQUIRED >
+<!ELEMENT author-tags (tag+)>
+<!ELEMENT crowd-tags (tag+)>
+<!ELEMENT tag (raw*)>
+<!ATTLIST tag
+	label CDATA #REQUIRED
+	count CDATA #IMPLIED
+	children CDATA #IMPLIED >
+<!ELEMENT raw EMPTY>
+<!ATTLIST raw
+	label CDATA #REQUIRED
+	count CDATA #REQUIRED >
