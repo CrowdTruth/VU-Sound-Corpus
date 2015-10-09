@@ -79,7 +79,7 @@ Let's look for sounds that the original author tagged 'vintage':
     vintage_sounds = sounds_by_author_tag('vintage')
 
 ### Code & Replication
-Our code was written in a combination of Python 2 (files 0-4) and Python 3 (files 5-8). To replicate our work, run the scripts in order. 
+Please find our code in the `scripts` folder. Our code was written in a combination of Python 2 (files 0-4) and Python 3 (files 5-8). To replicate our work, run the scripts in order. 
 
 **Requirements**
 
