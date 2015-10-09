@@ -37,7 +37,7 @@ search_count_dict   = search_term_counts()
 total_search_terms  = sum(b for a,b in search_count_dict.items())
 set_of_search_terms = set(a for a,b in search_count_dict.items())
 
-root                = etree.parse('../3-results/results.xml').getroot()
+root                = etree.parse('../steps/3-results/results.xml').getroot()
 
 def all_xpath_labels(query):
     return [tag.attrib['label'].lower() for tag in root.xpath(query)]
@@ -136,7 +136,7 @@ table = [['author tags', authortags_mps, tok_authortags_mps],
          ['conservative raw tags >= 5', cons5_rawtags_mps, tok_cons5_rawtags_mps],
         ]
 
-with open('../3-results/search_matches_per_sound/mps.csv','w') as f:
+with open('../steps/3-results/search_matches_per_sound/mps.csv','w') as f:
     writer = csv.writer(f)
     writer.writerow(['Method','MPS (types)', 'MPS (tokens)'])
     for row in table:

@@ -348,11 +348,11 @@ def run_cleaning(filename, clean_functions = [ check_dashes,
 
 # replace the tags with their clustered variant
 def replaceTags(filename):
-    d,clusters = run_cleaning('../1-filtered/'+filename)
+    d,clusters = run_cleaning('../steps/1-filtered/'+filename)
     keys = d.keys()
    
-    f = open('../1-filtered/'+filename, 'r')
-    w = open('../2-clustered/'+filename, 'wb')
+    f = open('../steps/1-filtered/'+filename, 'r')
+    w = open('../steps/2-clustered/'+filename, 'wb')
     reader = csv.DictReader(f)
     fieldnames = reader.fieldnames
     fieldnames.append('clustering')
@@ -385,7 +385,7 @@ def replaceTags(filename):
     print "Processed",filename
 
 # replace tags in all crowd files
-files = os.listdir('../1-filtered')
+files = os.listdir('../steps/1-filtered')
 for filename in files:
     replaceTags(filename)
     
@@ -393,14 +393,14 @@ for filename in files:
 import json
         
 # produce stats
-files = os.listdir('../2-clustered')
+files = os.listdir('../steps/2-clustered')
 for filename in files:
 
     keywordCount = 0
     keywordChange = 0
     sounds = {}
 
-    f = open('../2-clustered/'+filename, 'r')
+    f = open('../steps/2-clustered/'+filename, 'r')
     reader = csv.DictReader(f)
 
     for row in reader:

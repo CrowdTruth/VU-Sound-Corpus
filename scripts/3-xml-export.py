@@ -40,7 +40,7 @@ for job in jobs:
     spammers = results['metrics']['spammers']['list']
 
     # open the files to combine the original input
-    c = open('../2-clustered/'+filename, 'r')
+    c = open('../steps/2-clustered/'+filename, 'r')
     clustered = UnicodeDictReader(c)
 
     # keep a list of units in this task
@@ -148,4 +148,4 @@ for job in jobs:
 
 # output tree as XML
 tree = et.ElementTree(xml)
-tree.write('../3-results/results.xml',pretty_print=True)
+tree.write('../steps/3-results/results.xml',pretty_print=True)

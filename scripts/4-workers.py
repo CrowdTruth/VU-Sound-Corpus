@@ -35,7 +35,7 @@ jobs = range(1,16)
 r = requests.get('http://crowdtruth.lan/api/search?noCache&collection=entities&match[type]=unit&match[documentType]=sound&limit=100000')
 entities = {d['content']['id']:d['_id'] for d in r.json()['documents']}
 
-w = open('../3-results/workers.csv', 'wb')
+w = open('../steps/3-results/workers.csv', 'wb')
 wr = unicodecsv.writer(w, encoding='utf-8')
 wr.writerow(['filename','worker','CT spam','manual spam','workerCosine','workerDisagreement','sounds','keywordsPerSound','wordsPerSound','charPerSound','wordsPerKeyword','charPerKeyword','charPerWord'])
 
@@ -58,7 +58,7 @@ for job in jobs:
     spammers = results['metrics']['spammers']['list']
 
     # open the files to combine the original input
-    c = open('../2-clustered/'+filename, 'r')
+    c = open('../steps/2-clustered/'+filename, 'r')
     clustered = UnicodeDictReader(c)
 
     # go through all judgments and aggregate the results to the corpus

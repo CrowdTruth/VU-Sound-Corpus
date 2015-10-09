@@ -11,7 +11,7 @@ def UnicodeDictReader(utf8_data, **kwargs):
 
 # filter judgments that are obvious outliers
 
-files = os.listdir('../0-input-crowd')
+files = os.listdir('../steps/0-input-crowd')
 for filename in files:
 
     inputJudgments = 0
@@ -20,10 +20,10 @@ for filename in files:
     outputKeywords = 0
     uniqueKeywords = {}
 
-    f = open('../0-input-crowd/'+filename, 'r')
+    f = open('../steps/0-input-crowd/'+filename, 'r')
     reader = csv.DictReader(f)
    
-    w = open('../1-filtered/'+filename, 'wb')
+    w = open('../steps/1-filtered/'+filename, 'wb')
 
     # write column names
     fieldnames = reader.fieldnames
