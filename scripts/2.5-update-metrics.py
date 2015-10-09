@@ -3,7 +3,7 @@ import os
 
 # save results to CrowdTruth and run CrowdTruth metrics
 
-jobs = range(1,15)
+jobs = range(1,16)
 
 for j in jobs:
     r = requests.get('http://crowdtruth.lan/api/analytics/analytics?job=entity/sounds/job/'+str(j),)

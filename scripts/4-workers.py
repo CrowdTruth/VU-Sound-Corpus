@@ -22,10 +22,9 @@ manualSpam = {1:[3262732,6574449],
             10:[],
             11:[31910622],
             12:[],
-            13:[],
-            14:[21913197],
-            15:[31726043,32306791],
-            16:[32438173,32660177]}
+            13:[21913197],
+            14:[31726043,32306791],
+            15:[32438173,32660177]}
 
 
 # temp: make list of job id's
@@ -37,7 +36,7 @@ entities = {d['content']['id']:d['_id'] for d in r.json()['documents']}
 
 w = open('../steps/3-results/workers.csv', 'wb')
 wr = unicodecsv.writer(w, encoding='utf-8')
-wr.writerow(['filename','worker','CT spam','manual spam','workerCosine','workerDisagreement','sounds','keywordsPerSound','wordsPerSound','charPerSound','wordsPerKeyword','charPerKeyword','charPerWord'])
+wr.writerow(['filename','worker','CT spam','manual spam','workerCosine','workerDisagreement','sounds','keywordsPerSound','wordsPerSound','charPerSound','wordsPerKeyword','charPerKeyword','charPerWord','duplicates'])
 
 # for each job get the units and workers
 for job in jobs:
@@ -74,6 +73,7 @@ for job in jobs:
         manual = 0
         if workerId in manualSpam[job]:
             manual = 1
+            #print filename,workerId
 
         cosine = round(workers[worker]['worker_cosine'],3)
         disagreement = round(1.0-workers[worker]['avg_worker_agreement'],3)
@@ -87,8 +87,10 @@ for job in jobs:
         charPerKeyword = round(workers[worker]['characters_per_keyword'],3)
 
         charPerWord = round(workers[worker]['characters_per_word'],3)
+        
+        duplicates = round(workers[worker]['duplicate_count'],3)
       
-        wr.writerow([filename,workerId,spam,manual,cosine,disagreement,sounds,keywordsPerSound,wordsPerSound,charPerSound,wordsPerKeyword,charPerKeyword,charPerWord])
+        wr.writerow([filename,workerId,spam,manual,cosine,disagreement,sounds,keywordsPerSound,wordsPerSound,charPerSound,wordsPerKeyword,charPerKeyword,charPerWord,duplicates])
     
     c.close()
     print 'processed',filename
