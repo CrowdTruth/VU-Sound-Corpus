@@ -7,7 +7,7 @@ from tabulate import tabulate
 from scipy.stats import pearsonr, spearmanr
 
 def searchterms():
-    with open('./searchterms/Analytics Search page Search Terms 20150316-20150818.csv') as f:
+    with open('./resources/searchterms/Analytics Search page Search Terms 20150316-20150818.csv') as f:
         for i in range(6):
             next(f)
         reader = csv.DictReader(f, delimiter=',')

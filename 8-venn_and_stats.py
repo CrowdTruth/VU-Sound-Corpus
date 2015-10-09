@@ -8,7 +8,7 @@ from collections import Counter
 
 def searchterms():
     "Generator that yields tuples of search terms (str) and their counts (int)"
-    with open('./searchterms/Analytics Search page Search Terms 20150316-20150818.csv') as f:
+    with open('./resources/searchterms/Analytics Search page Search Terms 20150316-20150818.csv') as f:
         for i in range(6):
             next(f)
         reader = csv.DictReader(f, delimiter=',')
