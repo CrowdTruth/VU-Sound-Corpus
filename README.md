@@ -79,4 +79,9 @@ Let's look for sounds that the original author tagged 'vintage':
     vintage_sounds = sounds_by_author_tag('vintage')
 
 ### Code & Replication
-Our code was written in a combination of Python 2 (files 0-4) and Python 3 (files 5-8). To replicate our work, run the scripts in order. Files 2-4 require the [CrowdTruth](https://github.com/CrowdTruth/CrowdTruth) framework to be installed.
+Our code was written in a combination of Python 2 (files 0-4) and Python 3 (files 5-8). To replicate our work, run the scripts in order. 
+
+**Requirements**
+
+* File 1 requires a distributional model in Word2Vec format. We used the GoogleNews model from [here](https://code.google.com/p/word2vec/), that was trained on 100bn words.
+* Files 2-4 require the [CrowdTruth](https://github.com/CrowdTruth/CrowdTruth) framework to be installed.
