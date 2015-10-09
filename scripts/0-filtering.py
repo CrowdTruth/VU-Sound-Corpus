@@ -20,10 +20,10 @@ for filename in files:
     outputKeywords = 0
     uniqueKeywords = {}
 
-    f = open('0-input-crowd/'+filename, 'r')
+    f = open('../0-input-crowd/'+filename, 'r')
     reader = csv.DictReader(f)
    
-    w = open('1-filtered/'+filename, 'wb')
+    w = open('../1-filtered/'+filename, 'wb')
 
     # write column names
     fieldnames = reader.fieldnames
@@ -61,7 +61,7 @@ for filename in files:
     f.close()
     w.close()
 
-    uniqueKeywords = [len(uniqueKeywords[s]) for s in uniqueKeywords]  
+    uniqueKeywords = [len(uniqueKeywords[s]) for s in uniqueKeywords]
     uniqueKeywords = float(sum(uniqueKeywords)) / len(uniqueKeywords)
         
     print "Processed",filename,"(Judgments:",outputJudgments,"Keywords:",inputKeywords-outputKeywords,"removed,",outputKeywords,"left,",uniqueKeywords,"unique)"

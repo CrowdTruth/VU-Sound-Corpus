@@ -11,7 +11,7 @@ from lxml import etree
 from collections import Counter
 
 # Load the data
-parser = etree.parse('3-results/results.xml')
+parser = etree.parse('../3-results/results.xml')
 root = parser.getroot()
 
 def attlist(element):
@@ -46,5 +46,5 @@ def generate_dtd(root):
     return [properties(root)] + [dtd for tag in todo for dtd in generate_dtd(todo[tag])]
 
 # Write to file
-with open('3-results/soundcollection-template.dtd','w') as f:
+with open('../3-results/soundcollection-template.dtd','w') as f:
     f.write('\n'.join(generate_dtd(root)))

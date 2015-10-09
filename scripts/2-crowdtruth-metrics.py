@@ -2,8 +2,8 @@ import requests
 import os
 
 # save results to CrowdTruth and run CrowdTruth metrics
-for f in os.listdir('2-clustered/'):
-    files = {'file': open('2-clustered/'+f, 'rb')}
+for f in os.listdir('../2-clustered/'):
+    files = {'file': open('../2-clustered/'+f, 'rb')}
     values = {'input-project':'sounds',
               'input-type':'sound',
               'output-type':'sound2'}

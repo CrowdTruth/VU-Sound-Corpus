@@ -17,7 +17,7 @@ jobs = range(1,16)
 r = requests.get('http://localhost/api/search?noCache&collection=entities&match[type]=unit&match[documentType]=sound&limit=100000')
 entities = {d['content']['id']:d['_id'] for d in r.json()['documents']}
 
-xml = et.Element("soundcollection") 
+xml = et.Element("soundcollection")
 
 task = 1
 inputKeywords = 0
@@ -37,10 +37,10 @@ for job in jobs:
     workers = results['metrics']['workers']['withFilter']
     metrics = results['metrics']['units']['withoutSpam']
     units = results['results']['withoutSpam']
-    spammers = results['metrics']['spammers']['list']                  
+    spammers = results['metrics']['spammers']['list']
 
-    # open the files to combine the original input   
-    c = open('2-clustered/'+filename, 'r')
+    # open the files to combine the original input
+    c = open('../2-clustered/'+filename, 'r')
     clustered = UnicodeDictReader(c)
 
     # keep a list of units in this task
@@ -58,7 +58,7 @@ for job in jobs:
             task_units.append(sound['_unit_id'])
         
         # only add if sound is not yet in the corpus
-        if xml.find(".//sound[@id='"+sound['id']+"']") is None:     
+        if xml.find(".//sound[@id='"+sound['id']+"']") is None:
             s = et.SubElement(xml, "sound")
             s.set('id', sound['id'])
             s.set('batch', batch[0]+'.'+batch[1])
@@ -77,7 +77,7 @@ for job in jobs:
             mp3.set('type', 'mp3')
             ogg = et.SubElement(s, "file")
             ogg.text = sound['preview-hq-ogg']
-            ogg.set('type', 'ogg')     
+            ogg.set('type', 'ogg')
                                   
             # add uri element to sound
             uri = et.SubElement(s, "uri")
@@ -92,7 +92,7 @@ for job in jobs:
             # add ratings element to sound
             ratings = et.SubElement(s, "ratings")
             # clarity of sound from CrowdTruth metrics
-            clarity = et.SubElement(ratings, "clarity")           
+            clarity = et.SubElement(ratings, "clarity")
             clarity.set('count', str(metrics[entities[sound['id']]]['avg']['no_annotators']))
             clarity.text = str(metrics[entities[sound['id']]]['avg']['max_relation_Cos'])
             # web rating of sound from freesound.org
@@ -114,7 +114,7 @@ for job in jobs:
         clusters = json.loads(sound['clustering'])
         inputKeywords += len(clusters)
                           
-        # add the tags to the crowd-tags element if this worker was not a spammer        
+        # add the tags to the crowd-tags element if this worker was not a spammer
         if "crowdagent/CF/"+sound['_worker_id'] not in spammers:
             outputKeywords += len(clusters)
 
@@ -132,7 +132,7 @@ for job in jobs:
                 
                 raw = tag.find("./raw[@label='"+cluster+"']")
                 # if the raw tag is not yet in the cluster
-                if raw is None:               
+                if raw is None:
                     # add raw tag
                     raw = et.SubElement(tag, "raw")
                     raw.set('label', cluster)
@@ -148,4 +148,4 @@ for job in jobs:
 
 # output tree as XML
 tree = et.ElementTree(xml)
-tree.write('3-results/results.xml',pretty_print=True)
+tree.write('../3-results/results.xml',pretty_print=True)
