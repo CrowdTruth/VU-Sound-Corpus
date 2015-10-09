@@ -11,7 +11,7 @@ def UnicodeDictReader(utf8_data, **kwargs):
 
 # filter judgments that are obvious outliers
 
-files = os.listdir('0-input-crowd')
+files = os.listdir('../0-input-crowd')
 for filename in files:
 
     inputJudgments = 0
