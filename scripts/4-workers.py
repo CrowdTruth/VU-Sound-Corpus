@@ -10,21 +10,12 @@ def UnicodeDictReader(utf8_data, **kwargs):
     for row in csv_reader:
         yield {key: unicode(value, 'utf-8') for key, value in row.iteritems()}
 
-manualSpam = {1:[3262732,6574449],
-            2:[],
-            3:[],
-            4:[],
-            5:[],
-            6:[],
-            7:[],
-            8:[30276268],
-            9:[31913360,32427474],
-            10:[],
-            11:[31910622],
-            12:[],
-            13:[21913197],
-            14:[31726043,32306791],
-            15:[32438173,32660177]}
+trueSpammers = [3262732,6574449,31913360,32427474,31910622,31726043,32306791,32438173,32660177,31033819]
+
+tp = 0
+tn = 0
+fp = 0
+fn = 0
 
 
 # temp: make list of job id's
@@ -36,13 +27,10 @@ entities = {d['content']['id']:d['_id'] for d in r.json()['documents']}
 
 w = open('../steps/3-results/workers.csv', 'wb')
 wr = unicodecsv.writer(w, encoding='utf-8')
-wr.writerow(['filename','worker','CT spam','manual spam','workerCosine','workerDisagreement','sounds','keywordsPerSound','wordsPerSound','charPerSound','wordsPerKeyword','charPerKeyword','charPerWord','duplicates'])
+wr.writerow(['filename','worker','CT spam','true spam','workerCosine','workerDisagreement','sounds','keywordsPerSound','wordsPerSound','charPerSound','wordsPerKeyword','charPerKeyword','charPerWord','duplicateUnits','duplicateKeywords'])
 
 # for each job get the units and workers
 for job in jobs:
-    
-    inputKeywords = 0
-    outputKeywords = 0
     
     # load analytics from CrowdTruth platform
     r = requests.get('http://localhost/api/analytics/job?job=entity/sounds/job/'+str(job))
@@ -70,10 +58,19 @@ for job in jobs:
             spam = 1
 
         # did we manually tag this worker as spammer?
-        manual = 0
-        if workerId in manualSpam[job]:
-            manual = 1
-            #print filename,workerId
+        true = 0
+        if workerId in trueSpammers:
+            true = 1
+
+        # statistics
+        if true == 1 and spam == 1:
+            tp += 1
+        elif true == 0 and spam == 0:
+            tn += 1
+        elif true == 0 and spam == 1:
+            fp += 1
+        elif true == 1 and spam == 0:
+            fn += 1
 
         cosine = round(workers[worker]['worker_cosine'],3)
         disagreement = round(1.0-workers[worker]['avg_worker_agreement'],3)
@@ -88,10 +85,18 @@ for job in jobs:
 
         charPerWord = round(workers[worker]['characters_per_word'],3)
         
-        duplicates = round(workers[worker]['duplicate_count'],3)
-      
-        wr.writerow([filename,workerId,spam,manual,cosine,disagreement,sounds,keywordsPerSound,wordsPerSound,charPerSound,wordsPerKeyword,charPerKeyword,charPerWord,duplicates])
+        duplicateUnits = round(workers[worker]['duplicate_units'],3)
+        duplicateKeywords = round(workers[worker]['duplicate_keywords'],3)
+     
+        wr.writerow([filename,workerId,spam,true,cosine,disagreement,sounds,keywordsPerSound,wordsPerSound,charPerSound,wordsPerKeyword,charPerKeyword,charPerWord,duplicateUnits,duplicateKeywords])
     
     c.close()
-    print 'processed',filename
+        
+    print 'processed',filename,"tp:",tp,"tn:",tn,"fp:",fp,"fn:",fn
+
+
+precision = tp / (tp + fp * 1.0)
+recall = tp / (tp + fn * 1.0)
+print "precision:",precision,"recall:",recall
+
 w.close()
