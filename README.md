@@ -29,60 +29,68 @@ Sounds also have a number of elements: `file, uri, descriptions, webrating` and 
 
 Loading the data in Python is very simple: first import the `etree` module from `lxml`, and then parse the `results.xml` file.
 
-    # Import lxml:
-    from lxml import etree
-    
-    # Load the data:
-    xml  = etree.parse('./steps/3-results/results.xml')
-    root = xml.getroot()
-    
+```python
+# Import lxml:
+from lxml import etree
+
+# Load the data:
+xml  = etree.parse('./steps/3-results/results.xml')
+root = xml.getroot()
+```
 #### Selecting sounds with particular properties
 
 We can use XPATH-expressions to find sounds with particular properties, e.g. with a certain duration or bitdepth.
 
-    short_sounds = root.xpath('./sound[starts-with(@duration,"0.")]')
-    bitdepth_24  = root.xpath('./sound[@bitdepth="24"]')
+```python
+short_sounds = root.xpath('./sound[starts-with(@duration,"0.")]')
+bitdepth_24  = root.xpath('./sound[@bitdepth="24"]')
+```
 
 ##### By crowd tag
 
 Here is how to find all sounds with a 'bang' in them.
 
-    def sounds_by_crowd_tag(tag):
-        "Find sounds by original tags."
-        for sound in root.iterfind('sound'):
-            tags = [raw.attrib['label'] for raw in sound.xpath('./crowd-tags/tag/raw')]
-            if tag in tags:
-                yield sound
-    
-    bang_sounds = sounds_by_crowd_tag('bang')
+```python
+def sounds_by_crowd_tag(tag):
+    "Find sounds by original tags."
+    for sound in root.iterfind('sound'):
+        tags = [raw.attrib['label'] for raw in sound.xpath('./crowd-tags/tag/raw')]
+        if tag in tags:
+            yield sound
 
+bang_sounds = sounds_by_crowd_tag('bang')
+```
 ##### By their description
 
 We can also use the metadata of the sound to find the recordings you're after. Here is some code to get all the sounds that have a particular word in their description (e.g. 'periodically'):
 
-    def sounds_by_description(word):
-        "Find sounds by their description."
-        for sound in root.iterfind('sound'):
-            description = sound.find('description')
-            if word in description.text:
-                yield sound
-    
-    sounds_periodically = sounds_by_description("periodically")
+```python
+def sounds_by_description(word):
+    "Find sounds by their description."
+    for sound in root.iterfind('sound'):
+        description = sound.find('description')
+        if word in description.text:
+            yield sound
+
+sounds_periodically = sounds_by_description("periodically")
+```
 
 ##### By original tag
 
 Let's look for sounds that the original author tagged 'vintage':
 
-    def sounds_by_author_tag(tag):
-        "Find sounds by original tags."
-        for sound in root.iterfind('sound'):
-            if sound.xpath('./author-tags/tag[@label="' + tag + '"]'):
-                yield sound
-    
-    vintage_sounds = sounds_by_author_tag('vintage')
+```python
+def sounds_by_author_tag(tag):
+    "Find sounds by original tags."
+    for sound in root.iterfind('sound'):
+        if sound.xpath('./author-tags/tag[@label="' + tag + '"]'):
+            yield sound
+
+vintage_sounds = sounds_by_author_tag('vintage')
+```
 
 ### Code & Replication
-Please find our code in the `scripts` folder. Our code was written in a combination of Python 2 (files 0-4) and Python 3 (files 5-8). To replicate our work, run the scripts in order. 
+Please find our code in the `scripts` folder. Our code was written in a combination of Python 2 (files 0-4) and Python 3 (files 5-8). To replicate our work, run the scripts in order.
 
 **Requirements**
 
@@ -93,5 +101,3 @@ Please find our code in the `scripts` folder. Our code was written in a combinat
 * Files 3-8 require the `lxml` library to parse/generate XML.
 * File 6 requires the `tabulate` library.
 * File 8 requires `matplotlib-venn` to be installed.
-
-
