@@ -12,6 +12,9 @@ def UnicodeDictReader(utf8_data, **kwargs):
 
 trueSpammers = [3262732,6574449,31913360,32427474,31910622,31726043,32306791,32438173,32660177,31033819]
 
+
+# toevoegen 
+
 tp = 0
 tn = 0
 fp = 0
@@ -25,7 +28,7 @@ jobs = range(1,16)
 r = requests.get('http://crowdtruth.lan/api/search?noCache&collection=entities&match[type]=unit&match[documentType]=sound&limit=100000')
 entities = {d['content']['id']:d['_id'] for d in r.json()['documents']}
 
-w = open('../steps/3-results/workers.csv', 'wb')
+w = open('../steps/4-results/workers.csv', 'wb')
 wr = unicodecsv.writer(w, encoding='utf-8')
 wr.writerow(['filename','worker','CT spam','true spam','workerCosine','workerDisagreement','sounds','keywordsPerSound','wordsPerSound','charPerSound','wordsPerKeyword','charPerKeyword','charPerWord','duplicateUnits','duplicateKeywords'])
 

@@ -7,7 +7,7 @@ from math import log
 import random, tabulate
 
 # Load the data
-xml  = etree.parse('../steps/3-results/results.xml')
+xml  = etree.parse('../steps/4-results/results.xml')
 root = xml.getroot()
 
 # Get counts for the tags
@@ -98,10 +98,10 @@ author_tags, crowd_tags = shared(author_tags, crowd_tags)
 result = typical_words(author_tags, crowd_tags, 'freesound', 'crowd')
 
 # Write to file:
-with open('../steps/3-results/typical_normalized/freesound.txt','w') as f:
+with open('../steps/4-results/typical_normalized/freesound.txt','w') as f:
     f.write('\n'.join(result['freesound']))
 
-with open('../steps/3-results/typical_normalized/crowd.txt','w') as f:
+with open('../steps/4-results/typical_normalized/crowd.txt','w') as f:
     f.write('\n'.join(result['crowd']))
 
 # Make comparison for the raw tags:
@@ -116,10 +116,10 @@ author_tags, raw_crowd_tags = shared(author_tags, raw_crowd_tags)
 result = typical_words(author_tags, raw_crowd_tags, 'freesound', 'crowd')
 
 # Write to file:
-with open('../steps/3-results/typical_raw/freesound.txt','w') as f:
+with open('../steps/4-results/typical_raw/freesound.txt','w') as f:
     f.write('\n'.join(result['freesound']))
 
-with open('../steps/3-results/typical_raw/crowd.txt','w') as f:
+with open('../steps/4-results/typical_raw/crowd.txt','w') as f:
     f.write('\n'.join(result['crowd']))
 
 table = [['Crowd', ', '.join(random.sample(result['crowd'], 50))],
