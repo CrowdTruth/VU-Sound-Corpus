@@ -1,5 +1,6 @@
 import re
-import io, json
+import json
+import requests
 
 def UnicodeDictReader(utf8_data, **kwargs):
     csv_reader = csv.DictReader(utf8_data, **kwargs)
@@ -12,18 +13,16 @@ jobs = range(1,16)
 r = requests.get('http://localhost/api/search?noCache&collection=entities&match[type]=unit&match[documentType]=sound&limit=100000')
 entities = {d['content']['id']:d['_id'] for d in r.json()['documents']}
 
-xml = et.Element("soundcollection")
 
-task = 1
-inputKeywords = 0
-outputKeywords = 0
 # for each job get the units and workers
 for job in jobs:
     
     # load analytics from CrowdTruth platform
     r = requests.get('http://localhost/api/analytics/job?job=entity/sounds/job/'+str(job))
     results = r.json()['infoStat']
-    
+    filename = results['platformJobId']
 
-    with io.open('data.txt', 'w', encoding='utf-8') as f:
-    f.write(unicode(json.dumps(data, ensure_ascii=False)))
+    with open('../steps/3-crowdtruth/' + filename + '.json', 'wb') as f:
+        f.write(unicode(json.dumps(results, indent=4, separators=(',', ': '))))
+
+    print "Saved job",str(job),"as",filename
