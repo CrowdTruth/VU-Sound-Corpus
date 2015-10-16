@@ -8,7 +8,7 @@ This repository contains all the data and code that was used to annotate
 sounds from [the Freesound.org database](www.freesound.org).
 
 ### Data
-The folder  `./steps/3-results/` contains all of our results, including `results.xml` which is the XML file that contains all the annotation data and `soundcollection.dtd`, which specifies the structure our resource. There are also four subfolders:
+The folder  `./steps/4-results/` contains all of our results, including `results.xml` which is the XML file that contains all the annotation data and `soundcollection.dtd`, which specifies the structure our resource. There are also four subfolders:
 
 * `Frequencies`: this folder contains CSV files with frequency counts for all (author, raw, clustered, search) tags.
 * `Search_matches_per_sound`: this folder contains a CSV file with the results from our search experiment.
@@ -34,7 +34,7 @@ Loading the data in Python is very simple: first import the `etree` module from 
 from lxml import etree
 
 # Load the data:
-xml  = etree.parse('./steps/3-results/results.xml')
+xml  = etree.parse('./steps/4-results/results.xml')
 root = xml.getroot()
 ```
 #### Selecting sounds with particular properties
