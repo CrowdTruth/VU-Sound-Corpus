@@ -4,8 +4,9 @@
 *Vrije Universiteit Amsterdam*
 
 
-This repository contains all the data and code that was used to annotate
-sounds from [the Freesound.org database](www.freesound.org).
+This repository contains all the data and code that was used to annotate sounds from [the Freesound.org database](www.freesound.org). If you use this data, please cite our forthcoming paper:
+
+* Emiel van Miltenburg, Benjamin Timmermans and Lora Aroyo (2016) *The VU Sound Corpus: Adding more fine-grained annotations to the Freesound database.* To appear in: Proceedings of LREC.
 
 ### Data
 The folder  `./steps/4-results/` contains all of our results, including `results.xml` which is the XML file that contains all the annotation data and `soundcollection.dtd`, which specifies the structure our resource. There are also four subfolders:
