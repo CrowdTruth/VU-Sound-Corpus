@@ -8,6 +8,8 @@ This repository contains all the data and code that was used to annotate sounds 
 
 * Emiel van Miltenburg, Benjamin Timmermans and Lora Aroyo (2016) *The VU Sound Corpus: Adding more fine-grained annotations to the Freesound database.* To appear in: Proceedings of LREC.
 
+A tool to browse the VU Sound Corpus is available [here](https://github.com/evanmiltenburg/SoundBrowser).
+
 ### Data
 The folder  `./steps/4-results/` contains all of our results, including `results.xml` which is the XML file that contains all the annotation data and `soundcollection.dtd`, which specifies the structure our resource. There are also four subfolders:
 
