@@ -4,11 +4,14 @@
 *Vrije Universiteit Amsterdam*
 
 
-This repository contains all the data and code that was used to annotate
-sounds from [the Freesound.org database](www.freesound.org).
+This repository contains all the data and code that was used to annotate sounds from [the Freesound.org database](www.freesound.org). If you use this data, please cite our forthcoming paper:
+
+* Emiel van Miltenburg, Benjamin Timmermans and Lora Aroyo (2016) *The VU Sound Corpus: Adding more fine-grained annotations to the Freesound database.* To appear in: Proceedings of LREC.
+
+A tool to browse the VU Sound Corpus is available [here](https://github.com/evanmiltenburg/SoundBrowser).
 
 ### Data
-The folder  `./steps/3-results/` contains all of our results, including `results.xml` which is the XML file that contains all the annotation data and `soundcollection.dtd`, which specifies the structure our resource. There are also four subfolders:
+The folder  `./steps/4-results/` contains all of our results, including `results.xml` which is the XML file that contains all the annotation data and `soundcollection.dtd`, which specifies the structure our resource. There are also four subfolders:
 
 * `Frequencies`: this folder contains CSV files with frequency counts for all (author, raw, clustered, search) tags.
 * `Search_matches_per_sound`: this folder contains a CSV file with the results from our search experiment.
@@ -34,7 +37,7 @@ Loading the data in Python is very simple: first import the `etree` module from 
 from lxml import etree
 
 # Load the data:
-xml  = etree.parse('./steps/3-results/results.xml')
+xml  = etree.parse('./steps/4-results/results.xml')
 root = xml.getroot()
 ```
 #### Selecting sounds with particular properties
@@ -51,28 +54,14 @@ bitdepth_24  = root.xpath('./sound[@bitdepth="24"]')
 Here is how to find all sounds with a 'bang' in them.
 
 ```python
-def sounds_by_crowd_tag(tag):
-    "Find sounds by original tags."
-    for sound in root.iterfind('sound'):
-        tags = [raw.attrib['label'] for raw in sound.xpath('./crowd-tags/tag/raw')]
-        if tag in tags:
-            yield sound
-
-bang_sounds = sounds_by_crowd_tag('bang')
+bang_sounds = root.xpath('./sound[crowd-tags/tag/raw[@label="bang"]]')
 ```
 ##### By their description
 
-We can also use the metadata of the sound to find the recordings you're after. Here is some code to get all the sounds that have a particular word in their description (e.g. 'periodically'):
+We can also use the metadata of the sound to find the recordings you're after. Here is some code to get all the sounds that have a particular word in their description (e.g. 'synth'):
 
 ```python
-def sounds_by_description(word):
-    "Find sounds by their description."
-    for sound in root.iterfind('sound'):
-        description = sound.find('description')
-        if word in description.text:
-            yield sound
-
-sounds_periodically = sounds_by_description("periodically")
+sounds_synth = root.xpath('./sound[description[contains(.,"synth")]]')
 ```
 
 ##### By original tag
@@ -80,13 +69,7 @@ sounds_periodically = sounds_by_description("periodically")
 Let's look for sounds that the original author tagged 'vintage':
 
 ```python
-def sounds_by_author_tag(tag):
-    "Find sounds by original tags."
-    for sound in root.iterfind('sound'):
-        if sound.xpath('./author-tags/tag[@label="' + tag + '"]'):
-            yield sound
-
-vintage_sounds = sounds_by_author_tag('vintage')
+vintage_sounds = root.xpath('./sound[author-tags/tag[@label="vintage"]]')
 ```
 
 ### Code & Replication
