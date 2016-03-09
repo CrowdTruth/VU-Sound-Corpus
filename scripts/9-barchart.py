@@ -54,6 +54,8 @@ search_num = (number_in_set(raw_tag_counter, search) / total_raw) * 100
 author_and_search_num = (number_in_set(raw_tag_counter, author_and_search) / total_raw) * 100
 rest_num = (number_in_set(raw_tag_counter, rest) / total_raw) * 100
 
+print(author_num, search_num, author_and_search_num, rest_num)
+
 # Put them in a dictionary.
 # d = {'Groups': ["Author tags", "Search terms", "Both", "Rest"],
 #      'Percentage': [author_num, search_num, author_and_search_num, rest_num]}
@@ -65,8 +67,7 @@ rest_num = (number_in_set(raw_tag_counter, rest) / total_raw) * 100
 #
 # bar_chart = df.plot(kind='barh', width=0.1, label=None);
 
-
-sns.set_context({"figure.figsize": (8,2)})
+sns.set_context({"figure.figsize": (12,2)})
 
 sns.barplot([author_num, search_num, rest_num],
             ["Author tags", "Search terms", "Rest"],

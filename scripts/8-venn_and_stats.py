@@ -43,6 +43,7 @@ plt.clf()
 v = venn3([all_author_tags, all_raw_tags, all_search_terms],['Author', 'Crowd', 'Search'])
 for patch in v.patches:
     patch.set_edgecolor('black')
+    patch.set_facecolor('w') # remove this line for color diagram.
 plt.savefig('../steps/4-results/figures/venn_raw.pdf')
 
 # Generate frequency lists.
