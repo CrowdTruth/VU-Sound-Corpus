@@ -4,7 +4,61 @@
 from lxml import etree
 from collections import Counter
 from math import log
-import random, tabulate
+import random
+import tabulate
+from functools import partial
+from wordcloud import WordCloud
+
+# Palettes availabe for the coloring of the word clouds.
+palettes = {0: [(77, 137, 99), (105, 165, 131), (225, 179, 120),
+                (224, 204, 151), (236, 121, 154), (159, 2, 81)],
+                
+            1: [(163, 30, 57), (72, 92, 90), (140, 156, 154),
+                (157, 178, 177), (191, 207, 204), (214, 228, 225)],
+                
+            2: [(97, 148, 188), (165, 209, 243), (208, 234, 255),
+                (228, 0, 27), (236, 236, 236), (96, 96, 96)],
+                
+            3: [(230, 84, 0), (116, 32, 104), (35, 68, 131), (12, 99, 124),
+                (1, 137, 130), (71, 100, 117), (80, 84, 77)],
+                
+            4: [(2, 120, 120), (253, 182, 50), (43, 196, 68), (16, 197, 205),
+                (158, 243, 235), (2, 120, 42), (242, 243, 158), (194, 35, 38)],
+                
+            5: [(33, 182, 168), (23, 127, 117), (182, 119, 33), (127, 23, 31), (182, 33, 45)],
+            
+            6: [(52, 152, 219), (68, 187, 255), (137, 127, 186), (113, 186, 81),
+                (223, 85, 79), (252, 208, 54), (237, 87, 132), (255, 116, 22)],
+            }
+
+def random_color_func(word=None, font_size=None, position=None,
+                      orientation=None, font_path=None, random_state=None,
+                      palette=1):
+    "Random color generation."
+    if palette == None:
+        # Default:
+        colors = palettes[0]
+    else:
+        colors = palettes[palette]
+    return random.choice(colors)
+
+def wordcloud(text, filename):
+    "Generate word cloud for a text."
+    wc = WordCloud(width=2500,
+                   height=2500,
+                   font_path="/Users/Emiel/Library/Fonts/FiraMono-Regular.ttf",
+                   background_color='white',
+                   relative_scaling=0.5)
+    generated = wc.generate(text)
+    generated.recolor(color_func=partial(random_color_func, palette=1))
+    generated.to_file(filename)
+    return generated
+
+def typical_cloud(words,c,group):
+    "Save a word cloud for the typical words from a group."
+    filename = group + '.png'
+    text = ' '.join([word for word in words for i in range(c[word])])
+    wordcloud(text, filename)
 
 # Load the data
 xml  = etree.parse('../steps/4-results/results.xml')
@@ -114,6 +168,9 @@ author_tags, raw_crowd_tags = shared(author_tags, raw_crowd_tags)
 
 # Get the typical words for the author:
 result = typical_words(author_tags, raw_crowd_tags, 'freesound', 'crowd')
+
+typical_cloud(result['freesound'], author_tags, '../steps/4-results/figures/freesound')
+typical_cloud(result['crowd'], raw_crowd_tags, '../steps/4-results/figures/crowd')
 
 # Write to file:
 with open('../steps/4-results/typical_raw/freesound.txt','w') as f:
