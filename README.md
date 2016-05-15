@@ -4,9 +4,7 @@
 *Vrije Universiteit Amsterdam*
 
 
-This repository contains all the data and code that was used to annotate sounds from [the Freesound.org database](www.freesound.org). If you use this data, please cite our forthcoming paper:
-
-* Emiel van Miltenburg, Benjamin Timmermans and Lora Aroyo (2016) *The VU Sound Corpus: Adding more fine-grained annotations to the Freesound database.* To appear in: Proceedings of LREC.
+This repository contains all the data and code that was used to annotate sounds from [the Freesound.org database](www.freesound.org). If you use this data, please cite [our paper](http://www.lrec-conf.org/proceedings/lrec2016/summaries/206.html). Also consider a donation to www.freesound.org :)
 
 A tool to browse the VU Sound Corpus is available [here](https://github.com/evanmiltenburg/SoundBrowser).
 
